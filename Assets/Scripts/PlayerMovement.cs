@@ -20,10 +20,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        orientation = transform;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         movePlayer();
     }
@@ -33,11 +34,18 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
+        Debug.Log(horizontalInput + "  " + verticalInput);
 
         //caculate movement
         moveDir = (orientation.forward * verticalInput + orientation.right * horizontalInput) * Time.deltaTime;
 
         rb.AddForce(moveDir * moveSpeed, ForceMode2D.Force);
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+
+            Explode(moveDir);
+        
+        }
     }
 
     // Explode
@@ -47,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     // Vector2 dir : direction of explosion force
     public void Explode(Vector2 direction)
     {
-        rb.AddForce(direction * exForce, ForceMode2D.Impulse);
+        rb.AddForce(direction * exForce * moveSpeed, ForceMode2D.Impulse);
     }
 
 }
