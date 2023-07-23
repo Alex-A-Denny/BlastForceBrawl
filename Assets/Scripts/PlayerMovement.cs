@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float exForce = 10f;
     public float moveSpeed = 10f;
+    public float jumpForce = 5f;
 
     Vector2 moveDir;
     float horizontalInput;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     Transform orientation;
     
     public Rigidbody2D rb;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -41,10 +43,14 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(moveDir * moveSpeed, ForceMode2D.Force);
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-
+        //Explode
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
             Explode(moveDir);
-        
+        }
+
+        //jump, mainly used to setup an explosion
+        if (Input.GetKeyDown(KeyCode.Space)){
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
         }
     }
 
