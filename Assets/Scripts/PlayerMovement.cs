@@ -36,8 +36,6 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
-        Debug.Log(horizontalInput + "  " + verticalInput);
-
         //caculate movement
         moveDir = (orientation.forward * verticalInput + orientation.right * horizontalInput) * Time.deltaTime;
 
@@ -50,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
         //jump, mainly used to setup an explosion
         if (Input.GetKeyDown(KeyCode.Space)){
+            rb.velocity = new Vector2(rb.velocity.x, 0f);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
         }
     }
